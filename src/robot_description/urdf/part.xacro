@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Parameters -->
+  <xacro:property name="wheel_radius" value="0.1"/>
+  <xacro:property name="wheel_length" value="0.05"/>
+  <xacro:property name="lidar_radius" value="0.05"/>
+  <xacro:property name="lidar_length" value="0.05"/>
+  <xacro:property name="caster_radius" value="0.05"/>
+  <xacro:property name="arm_radius" value="0.045"/>
+  <xacro:property name="arm_length" value="0.1"/>
+  <xacro:property name="gripper_scale" value="2 2 2"/>
+  <xacro:property name="mass" value="1.0"/>
+  <xacro:property name="length_box" value="0.6"/>
+  <xacro:property name="width_box" value="0.4"/>
+  <xacro:property name="hight_box" value="0.2"/>
+
+  <!-- Colors -->
+  <material name="gray"><color rgba="0.7 0.7 0.7 1"/></material>
+  <material name="green"><color rgba="0 0.6 0 1"/></material>
+  <material name="white"><color rgba="1 1 1 1"/></material>
+  <material name="black"><color rgba="0 0 0 1"/></material>
+
+  <!-- Macros -->
+
+  <!-- Cylinder Link -->
+  <xacro:macro name="cylinder_link" params="name radius length mass color xyz rpy">
+    <link name="${name}">
+      
+      <visual>
+        <geometry>
+          <cylinder radius="${radius}" length="${length}"/>
+        </geometry>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+        <material name="${color}"/>
+      </visual>
+
+      <collision>
+        <geometry>
+          <cylinder radius="${radius}" length="${length}"/>
+        </geometry>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+      </collision>
+
+      <inertial>
+        <mass value="${mass}"/>
+        <inertia ixx="${(mass/12.0) * (3.0*radius*radius + length*length)}" ixy="0.0" ixz="0.0"
+                 iyy="${(mass/12.0) * (3.0*radius*radius + length*length)}" iyz="0.0"
+                 izz="${(mass/2.0)*(radius*radius)}"/>
+      </inertial>
+
+    </link>
+  </xacro:macro>
+
+  <!-- Mesh Link -->
+  <xacro:macro name="mesh_link" params="name mesh_path scale xyz rpy">
+    <link name="${name}">
+      
+      <visual>
+        <geometry>
+          <mesh filename="${mesh_path}" scale="${scale}"/>
+        </geometry>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+      </visual>
+
+    </link>
+  </xacro:macro>
+
+</robot>
+
