@@ -1,0 +1,4 @@
+ros2 launch robot_description display.launch.py
+ros2 launch robot_description display_rviz.launch.py
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+
